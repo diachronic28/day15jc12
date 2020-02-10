@@ -59,7 +59,7 @@ const Login=()=>{
         var cekdata=datauser.filter((val)=>val.username==username&&val.password==password)
         if(cekdata.length===1){
             userlogin=cekdata[0]
-            var output=`<h2>masuk segafai ${cekdata[0].role}</h2>
+            var output=`<h2>masuk sebagai ${cekdata[0].role}</h2>
                         <h3>username adalah ${cekdata[0].username}</h3>
                         <button onclick="Logout()">Logout</button>`
                 document.getElementById('username').value=''
