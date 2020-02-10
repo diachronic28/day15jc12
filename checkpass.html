@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Reg</title>
+</head>
+<body>
+    <center>
+        <h1>Login Register</h1>
+        Username : <input type="text" id="username" placeholder="masukkan nama"><br><br>
+        Password : <input type="password" id="password" placeholder="masukkan password"><br><br>
+        <button onclick="Register()">Register </button><br><br>
+        <button onclick="Login()">Login </button>
+        <p id="isi">
+
+        </p>
+    </center>
+</body>
+<script>
+    class User{
+        constructor(username,password,role){
+            this.username=username,
+            this.password=password,
+            this.role=role
+        }
+    }
+    var datauser=[
+        new User('admin','12','admin'),
+        new User('dino','12','user')
+]
+var salah=0
+var userlogin=[]
+const Register=()=>{
+    if(userlogin.length!==0){
+        alert('anda sudah login tidak bisa register mohon logout dahulu')
+}else{
+    var username=document.getElementById('username').value
+    var password=document.getElementById('password').value
+    if(username&&password){
+        var checkdata=datauser.filter((val)=>val.username==username)
+        // console.log(checkdata)jika username suda ada maka checkdata panjang arraynya sudah pasti lebih dari nol
+        if(checkdata.length===0){
+            datauser.push(new User(username,password,'user'))
+            document.getElementById('isi').innerHTML='<h2>user berhasil register mohon login lagi</h2>'
+        }else{
+            document.getElementById('isi').innerHTML='<h2>username sudah di pakai</h2>'
+        }
+    }else{
+        document.getElementById('isi').innerHTML='<h2>masukkan passowrd atau username</h2>'    
+    }
+  }
+}
+
+const Login=()=>{
+    var username=document.getElementById('username').value
+    var password=document.getElementById('password').value
+    if(username&&password){
+        var cekdata=datauser.filter((val)=>val.username==username&&val.password==password)
+        if(cekdata.length===1){
+            userlogin=cekdata[0]
+            var output=`<h2>masuk segafai ${cekdata[0].role}</h2>
+                        <h3>username adalah ${cekdata[0].username}</h3>
+                        <button onclick="Logout()">Logout</button>`
+                document.getElementById('username').value=''
+                document.getElementById('password').value=''//buat inputnya kosong lagii
+                document.getElementById('isi').innerHTML=output
+        }else{
+            if(salah===0){
+                document.getElementById('isi').innerHTML='<h2>User tidak Ada bro</h2>'
+                salah++
+            }else{
+                document.getElementById('isi').innerHTML='<h2>Udah di bilang user tidak ada</h2>'
+            }
+            salah++
+        }
+    }else{
+        document.getElementById('isi').innerHTML='<h2>Masukkan password atau username</h2>'
+    }
+}
+const Logout=()=>{
+    userlogin=[]
+    document.getElementById('isi').innerHTML=''
+    
+}
+</script>
+</html>
